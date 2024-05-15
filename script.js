@@ -1,3 +1,4 @@
+// Tabs and buttons
 $(document).ready(function () {
     // Array of all tab-ids
     var tabs = ['informacion', 'envio', 'productos'];
@@ -53,6 +54,7 @@ $(document).ready(function () {
     });
 });
 
+// Select2 fields
 var Select2Cascade = (function (window, $) {
 
     function Select2Cascade(parent, child, url, select2Options) {
@@ -105,7 +107,7 @@ $(document).ready(function () {
     });
 });
 
-
+// Agregar producto button and PRODUCTOS table
 document.getElementById('agregarProducto').addEventListener('click', function () {
     // Get the selected product
     var selectedProduct = document.getElementById('seleccionarProducto').value;
@@ -149,7 +151,7 @@ document.getElementById('agregarProducto').addEventListener('click', function ()
     }
 });
 
-
+// PDF
 function generatePDF(event) {
     event.preventDefault(); // Prevent the default form submission
 
