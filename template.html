@@ -183,44 +183,6 @@
             </table>
         </div>
     </div>
-    <button onclick="generatePDF()">Generate PDF</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script>
-        window.jsPDF = window.jspdf.jsPDF;
-        function generatePDF() {
-            // Get the HTML content as a data URL
-            html2canvas(document.body, {
-                useCORS: true,
-                allowTaint: true,
-                scrollX: 0,
-                scrollY: -window.scrollY
-            }).then(function (canvas) {
-                // Create a new PDF document
-                var pdf = new jsPDF('p', 'mm', 'a4');
-
-                // Calculate the dimensions of the PDF document
-                var imgWidth = 210;
-                var pageHeight = 297;
-                var imgHeight = canvas.height * imgWidth / canvas.width;
-                var heightLeft = imgHeight;
-
-                // Add the canvas data to the PDF document
-                var position = 0;
-                while (heightLeft > 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                    if (heightLeft > 0) {
-                        pdf.addPage();
-                    }
-                }
-
-                // Save the PDF document
-                pdf.save('guide.pdf');
-            });
-        }
-    </script>
     <!-- Bootstrap JS y dependencias -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
