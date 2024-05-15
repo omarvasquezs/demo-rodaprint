@@ -54,7 +54,7 @@ $(document).ready(function () {
     });
 });
 
-// Select2 fields
+// Select2 Dependent / Cascading Select List
 var Select2Cascade = (function (window, $) {
 
     function Select2Cascade(parent, child, url, select2Options) {
