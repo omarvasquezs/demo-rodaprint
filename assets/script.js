@@ -121,8 +121,18 @@ document.getElementById('agregarProducto').addEventListener('click', function ()
         var productCell = document.createElement('td');
         productCell.textContent = selectedProduct;
         productCell.style.minWidth = '12rem'; // Set the minimum width of the cell
-        newRow.appendChild(productCell);
 
+        // Create a hidden input element
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.value = selectedProduct; // Set the value to selectedProduct
+        hiddenInput.name = 'selectedProduct[]'; // Set the name attribute
+
+        // Append the hidden input to the product cell
+        productCell.appendChild(hiddenInput);
+
+        // Append the product cell to the new row
+        newRow.appendChild(productCell);
 
         // Create a cell with an input for the quantity
         var quantityCell = document.createElement('td');
@@ -131,13 +141,18 @@ document.getElementById('agregarProducto').addEventListener('click', function ()
         quantityInput.value = '1'; // Default quantity
         quantityInput.className = 'form-control'; // Add the form-control class
         quantityInput.style.width = '5rem'; // Set the width of the input
+
+        // Set the id and name attributes
+        quantityInput.id = 'productoCantidad[]'; // Replace with your desired id
+        quantityInput.name = 'productoCantidad[]'; // Replace with your desired name
+
         quantityCell.appendChild(quantityInput);
         newRow.appendChild(quantityCell);
 
         // Create a cell with a remove button
         var actionCell = document.createElement('td');
         var removeButton = document.createElement('button');
-        removeButton.innerHTML = '<i class="fa fa-trash-o"></i>'; // Use innerHTML instead of textContent
+        removeButton.innerHTML = '<i class="fas fa-trash"></i>'; // Use innerHTML instead of textContent
         removeButton.className = 'btn btn-danger'; // Add classes to the button
         removeButton.onclick = function () {
             // Remove the current row

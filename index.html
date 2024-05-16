@@ -44,7 +44,7 @@
       </li>
     </ul>
     <!-- TABS END -->
-    <form method="post" id="guiaSubmission">
+    <form method="post" id="guiaSubmission" action="template.php">
       <!-- TABS CONTENT -->
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active px-4" id="informacion" role="tabpanel" aria-labelledby="informacion-tab">
@@ -84,7 +84,7 @@
           </div>
           <div class="mb-3">
             <label for="observaciones" class="form-label">Observaciones</label>
-            <textarea class="form-control" id="observaciones" rows="3"></textarea>
+            <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
           </div>
           <!-- NEXT BUTTON -->
           <button class="btn btn-primary siguiente text-uppercase">Siguiente</button>
@@ -95,20 +95,20 @@
             <!-- Fecha del envío -->
             <div class="col">
               <label for="fechaEnvio" class="form-label">Fecha del envío</label>
-              <input type="date" class="form-control" id="fechaEnvio">
+              <input type="date" class="form-control" name="fechaEnvio" id="fechaEnvio">
             </div>
           </div>
           <div class="row mb-5">
             <div class="col">
               <label for="cantidadBultos" class="form-label">Cantidad de bultos*</label>
-              <input type="number" class="form-control" id="cantidadBultos">
+              <input type="number" class="form-control" name="cantidadBultos" id="cantidadBultos">
             </div>
             <div class="col">
               <label for="pesoTotal" class="form-label">Peso total*</label>
               <div class="input-group">
                 <input type="number" class="form-control" name="pesoTotal" id="pesoTotal">
                 <div class="input-group-append">
-                  <select class="form-select" id="pesoUnidad">
+                  <select class="form-select" name="pesoUnidad" id="pesoUnidad">
                     <option value="kg" selected>KG</option>
                     <option value="t">T</option>
                     <option value="oz">OZ</option>
@@ -126,7 +126,7 @@
           <!-- THIRD CONTENT -->
           <div class="row mb-2">
             <div class="col-md-8 mb-4">
-              <select id="seleccionarProducto" class="form-control select2">
+              <select id="seleccionarProducto" name="seleccionarProducto" class="form-control select2">
                 <option value=""> -- SELECCIONE PRODUCTO -- </option>
                 <option value="producto_1">Producto 1</option>
                 <option value="producto_2">Producto 2</option>

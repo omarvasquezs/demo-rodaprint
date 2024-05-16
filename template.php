@@ -43,7 +43,7 @@
                         <p class="mb-0 mt-0"><b>RUC/DNI</b></p>
                     </div>
                     <div class="col-6">
-                        <p class="mb-0 mt-0">20100995540</p>
+                        <p class="mb-0 mt-0">00000000000</p>
                     </div>
                     <div class="col-4">
                         <div class="row">
@@ -51,7 +51,7 @@
                                 <p class="mb-0 mt-0"><b>FECHA EMISIÓN</b></p>
                             </div>
                             <div class="col-6">
-                                <p class="mb-0 mt-0">13/03/2024</p>
+                                <p id="fechaEmision" class="mb-0 mt-0"><?php echo $_POST['fechaEmision'] ?? ''; ?></p>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <p class="mb-0 mt-0"><b>RAZON SOCIAL</b></p>
                     </div>
                     <div class="col-10">
-                        <p class="mb-0 mt-0">LAIVES S.A</p>
+                        <p class="mb-0 mt-0"><?php echo $_POST['destinatario'] ?? ''; ?></p>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         <p class="mb-0 mt-0"><b>DIRECCIÓN</b></p>
                     </div>
                     <div class="col-10">
-                        <p class="mb-0 mt-0">AV. NICOLAS DE PIEROLA NRO. 601 FND. LA ESTRELLA</p>
+                        <p class="mb-0 mt-0"><?php echo $_POST['destinoDireccion'] ?? ''; ?></p>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                                 <p class="mb-0 mt-0"><b>FECHA DE ENVÍO</b></p>
                             </div>
                             <div class="col-6">
-                                <p class="mb-0 mt-0">13/03/2024</p>
+                                <p class="mb-0 mt-0"><?php echo $_POST['fechaEnvio'] ?? ''; ?></p>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,9 @@
                         <p class="mb-0 mt-0"><b>PESO BRUTO TOTAL</b></p>
                     </div>
                     <div class="col-5">
-                        <p class="mb-0 mt-0">10 KG</p>
+                        <p class="mb-0 mt-0">
+                            <?php echo ($_POST['pesoTotal'] ?? '') . ' ' . ($_POST['pesoUnidad'] ?? ''); ?>
+                        </p>
                     </div>
                     <div class="col-4">
                         <div class="row">
@@ -114,7 +116,7 @@
                                 <p class="mb-0 mt-0"><b>N° DE BULTOS</b></p>
                             </div>
                             <div class="col-6">
-                                <p class="mb-0 mt-0">6</p>
+                                <p class="mb-0 mt-0"><?php echo $_POST['cantidadBultos'] ?? ''; ?></p>
                             </div>
                         </div>
                     </div>
@@ -139,7 +141,7 @@
                     </div>
                     <div class="col-9">
                         <p class="mb-0 mt-0">
-                            150103 - ATE/LIMA/LIMA AV. NICOLAS DE PIEROLA 671
+                            <?php echo $_POST['destinoDireccion'] ?? ''; ?>
                         </p>
                     </div>
                 </div>
@@ -168,20 +170,49 @@
             <h5 class="fw-bold pb-1 mb-0 bg-secondary bg-opacity-25">VEHICULO</h5>
             <p class="mb-0 mt-0">Número de placa: BKT908</p>
         </div>
-        <div class="row mb-3">
-            <table class="table">
-                <thead>
+        <div class="row mb-3 border border-dark border-2 pb-1">
+            <table class="table table-borderless">
+                <thead class="text-uppercase">
                     <tr>
-                        <th>N°</th>
-                        <th>Unidad</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
+                        <th style="background-color: #dadcde;" scope="col">N°</th>
+                        <th style="background-color: #dadcde;" scope="col">Unidad</th>
+                        <th style="background-color: #dadcde;" scope="col">Descripción</th>
+                        <th style="background-color: #dadcde;" scope="col">Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Add rows here -->
+                    <?php
+                        $selectedProducts = $_POST['selectedProduct'];
+                        $productoCantidades = $_POST['productoCantidad'];
+                        foreach ($selectedProducts as $index => $product) {
+                            $cantidad = $productoCantidades[$index];
+                            echo "<tr>";
+                            echo "<td>" . ($index + 1) . "</td>";
+                            echo "<td>UNIDADES</td>";
+                            echo "<td>" . htmlspecialchars($product) . "</td>";
+                            echo "<td>" . htmlspecialchars($cantidad) . "</td>";
+                            echo "</tr>";
+                        }
+                    ?>
                 </tbody>
             </table>
+        </div>
+        <div class="row mb-3 border border-dark border-2 pb-1">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3">
+                        <p class="mb-0 mt-0">
+                            <b>OBSERVACIONES</b>
+                        </p>
+                    </div>
+                    <div class="col-9">
+                        <p class="mb-0 mt-0">
+                            <?php echo $_POST['observaciones'] ?? ''; ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Bootstrap JS y dependencias -->
@@ -189,16 +220,18 @@
     <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script>
+    <!--<script>
         // Wait for the document to be fully loaded before executing the script
         document.addEventListener("DOMContentLoaded", function () {
             // Create a new jsPDF instance with page size options
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-    
+            const doc = new jsPDF({
+                format: 'a4' // Set the page format to A4
+            });
+
             // Select the HTML element containing the content you want to include in the PDF
             const element = document.querySelector(".container");
-    
+
             // Generate the PDF from the HTML element
             html2canvas(element, {
                 scale: 2, // Adjust this value based on the resolution you need
@@ -209,18 +242,19 @@
                 var imgProps = doc.getImageProperties(imgData);
                 var pdfWidth = doc.internal.pageSize.getWidth();
                 var pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    
+
                 // Set margins
                 var marginLeft = 10; // Adjust as needed
                 var marginTop = 10; // Adjust as needed
                 var marginBottom = 10; // Adjust as needed
                 var marginRight = 10; // Adjust as needed
-    
+
                 // Add image with margins
                 doc.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth - marginLeft - marginRight, pdfHeight - marginTop - marginBottom);
                 doc.save("guia_remision.pdf");
             });
         });
-    </script>    
+    </script>-->
 </body>
+
 </html>
