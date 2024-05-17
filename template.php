@@ -220,7 +220,7 @@
     <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!--<script>
+    <script>
         // Wait for the document to be fully loaded before executing the script
         document.addEventListener("DOMContentLoaded", function () {
             // Create a new jsPDF instance with page size options
@@ -254,7 +254,7 @@
                 doc.save("guia_remision.pdf");
             });
         });
-    </script>-->
+    </script>
 </body>
 
 </html>
