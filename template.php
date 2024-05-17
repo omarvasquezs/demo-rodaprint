@@ -183,17 +183,17 @@
                 <tbody>
                     <!-- Add rows here -->
                     <?php
-                        $selectedProducts = $_POST['selectedProduct'];
-                        $productoCantidades = $_POST['productoCantidad'];
-                        foreach ($selectedProducts as $index => $product) {
-                            $cantidad = $productoCantidades[$index];
-                            echo "<tr>";
-                            echo "<td>" . ($index + 1) . "</td>";
-                            echo "<td>UNIDADES</td>";
-                            echo "<td>" . htmlspecialchars($product) . "</td>";
-                            echo "<td>" . htmlspecialchars($cantidad) . "</td>";
-                            echo "</tr>";
-                        }
+                    $selectedProducts = $_POST['selectedProduct'];
+                    $productoCantidades = $_POST['productoCantidad'];
+                    foreach ($selectedProducts as $index => $product) {
+                        $cantidad = $productoCantidades[$index];
+                        echo "<tr>";
+                        echo "<td>" . ($index + 1) . "</td>";
+                        echo "<td>UNIDADES</td>";
+                        echo "<td>" . htmlspecialchars($product) . "</td>";
+                        echo "<td>" . htmlspecialchars($cantidad) . "</td>";
+                        echo "</tr>";
+                    }
                     ?>
                 </tbody>
             </table>
@@ -221,36 +221,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // Wait for the document to be fully loaded before executing the script
         document.addEventListener("DOMContentLoaded", function () {
-            // Create a new jsPDF instance with page size options
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({
-                format: 'a4' // Set the page format to A4
-            });
-
-            // Select the HTML element containing the content you want to include in the PDF
+            const doc = new jsPDF({ format: 'a4' });
             const element = document.querySelector(".container");
 
-            // Generate the PDF from the HTML element
             html2canvas(element, {
-                scale: 2, // Adjust this value based on the resolution you need
-                useCORS: true, // Include this option to fix cross-origin issue if needed
-                allowTaint: true // Include this option to fix cross-origin issue if needed
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                imageQuality: 0.98 // Set the image quality to 0.98
             }).then(function (canvas) {
-                var imgData = canvas.toDataURL('image/png');
+                var imgData = canvas.toDataURL('image/jpeg'); // Set the image format to JPEG
                 var imgProps = doc.getImageProperties(imgData);
                 var pdfWidth = doc.internal.pageSize.getWidth();
                 var pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-                // Set margins
-                var marginLeft = 10; // Adjust as needed
-                var marginTop = 10; // Adjust as needed
-                var marginBottom = 10; // Adjust as needed
-                var marginRight = 10; // Adjust as needed
-
-                // Add image with margins
-                doc.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth - marginLeft - marginRight, pdfHeight - marginTop - marginBottom);
+                var marginLeft = 10;
+                var marginTop = 10;
+                var marginBottom = 10;
+                var marginRight = 10;
+                doc.addImage(imgData, 'JPEG', marginLeft, marginTop, pdfWidth - marginLeft - marginRight, pdfHeight - marginTop - marginBottom);
                 doc.save("guia_remision.pdf");
             });
         });
